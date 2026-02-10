@@ -28,7 +28,7 @@ def create_item(item:Item):
     items.append(item)
     return items # or return items list by 'return items', or single item by 'return item'
 
-@app.get("/items",response_model=List[Item])
+@app.get("/items",response_model=list[Item])
 def list_items(limit:int = 10):
     return items[0:limit]
 
