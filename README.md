@@ -135,6 +135,25 @@ app = FastAPI()
 ```
 This creates the application. All routes are registered on this `app` object using decorators like `@app.get()` and `@app.post()`.
 
+### Route vs Endpoint
+
+These two terms are related but mean slightly different things:
+
+- **Route** — the URL **path** defined in the decorator, e.g. `/items`. It's the URL pattern that maps to a function.
+- **Endpoint** — the combination of the **path + HTTP method**, e.g. `POST /items`. This is what uniquely identifies where a request goes.
+
+You can have two routes with the **same path** but different methods, and they are **different endpoints**:
+
+```python
+@app.post("/items")   # Endpoint: POST /items
+def create_item(...):
+
+@app.get("/items")    # Endpoint: GET /items
+def list_items(...):
+```
+
+Same route (`/items`), two different endpoints. In everyday conversation people use the terms interchangeably — and that's fine — but technically, **endpoint = route + HTTP method**.
+
 ### Route Decorators
 - `@app.get("/path")` — handles HTTP GET requests
 - `@app.post("/path")` — handles HTTP POST requests
