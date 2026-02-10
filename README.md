@@ -186,12 +186,65 @@ Raises a proper HTTP error response when something goes wrong, like requesting a
 
 ## Interactive API Docs
 
-FastAPI auto-generates interactive documentation. Once the server is running, visit:
+FastAPI auto-generates interactive documentation based on your code — your route decorators, type hints, and Pydantic models are all used to build it automatically. No extra configuration needed.
+
+### How to Open the Interactive Docs
+
+**Step 1:** Make sure your virtual environment is activated:
+
+```bash
+source venv/bin/activate
+```
+
+**Step 2:** Start the server (and keep it running):
+
+```bash
+uvicorn main:app --reload
+```
+
+**Step 3:** With the server running, open one of these URLs in your browser:
 
 - **Swagger UI:** http://127.0.0.1:8000/docs
 - **ReDoc:** http://127.0.0.1:8000/redoc
 
-These let you explore and test all endpoints directly in the browser — no curl needed.
+The server must stay running in the terminal while you use the docs. If you stop the server (Ctrl+C), the docs page will stop working.
+
+### Why Use Interactive Docs Instead of the Terminal?
+
+Testing APIs with `curl` in the terminal works, but it has friction:
+
+- You have to remember the exact URL, method, headers, and body format
+- Long commands are easy to mistype (wrong port, line breaks, missing quotes)
+- You can't easily see what parameters an endpoint expects
+
+The **Swagger UI** solves all of this:
+
+| | Terminal (`curl`) | Swagger UI (`/docs`) |
+|---|---|---|
+| **See all endpoints** | You need to read the code | Listed visually in one page |
+| **Know the parameters** | You need to read the code | Auto-generated input forms |
+| **Send a request** | Type a full curl command | Click "Try it out" and fill in fields |
+| **See the response** | Raw text in terminal | Formatted JSON with status code |
+| **Error-prone?** | Easy to mistype URLs, ports, JSON | Point-and-click, minimal errors |
+| **Request body format** | You must know the JSON structure | Shows the exact schema from your Pydantic model |
+
+In short, **Swagger UI is like a visual, interactive version of curl** — it reads your code and builds a UI for testing, so you don't have to memorize anything.
+
+### Swagger UI vs ReDoc
+
+Both are auto-generated from the same code, but they serve different purposes:
+
+| | Swagger UI (`/docs`) | ReDoc (`/redoc`) |
+|---|---|---|
+| **Can test endpoints?** | Yes — "Try it out" button lets you send real requests | No — read-only, documentation viewing only |
+| **Best for** | Development and debugging — quickly test your API while building it | Sharing — clean, polished docs to give to teammates or API consumers |
+| **Layout** | Functional, collapsible sections per endpoint | Clean, three-panel layout with search and navigation sidebar |
+| **Shows request body schema?** | Yes, with editable example JSON | Yes, with detailed model breakdowns |
+| **Interactive?** | Fully interactive — fill in fields, click execute, see live response | Not interactive — purely for reading |
+
+**When to use which:**
+- Use **Swagger UI** (`/docs`) during development. It's your go-to tool for testing endpoints without leaving the browser.
+- Use **ReDoc** (`/redoc`) when you want to share clean API documentation with others, or when you just want to read through your API's structure.
 
 ---
 
